@@ -226,17 +226,23 @@ public class LinkedList {
 		if (index<0 || index>size){
 			throw new IllegalArgumentException(
 					"ERROR IllegalArgumentException: index must be between 0 and size");
-
-		}else if (index==0){
-			Node removed = first;
-			first= first.next;
-			removed.next=null;
-		}
-		else if (index==size){
-			last= getNode(size-1);
-			last.next=null;
-
-		}
+			
+				}else if (index==0){
+					Node removed = first;
+					first= first.next;
+					removed.next=null;
+					if(first==null){
+						last=null;
+				}
+			}
+				else if (index==size-1){
+					Node removed = last;
+					Node newLast = getNode(size-2);
+					last= newLast;
+					last.next=null;
+					removed.next = null;
+		
+				}
 		else{
 		Node left = getNode(index-1);
 		Node removed = getNode(index);
@@ -260,16 +266,22 @@ public class LinkedList {
 			throw new IllegalArgumentException(
 					"ERROR IllegalArgumentException: index must be between 0 and size");
 
-		}else if (index==0){
-			Node removed = first;
-			first= first.next;
-			removed.next=null;
-		}
-		else if (index==size){
-			last= getNode(size-1);
-			last.next=null;
-
-		}
+				}else if (index==0){
+					Node removed = first;
+					first= first.next;
+					removed.next=null;
+					if(first==null){
+						last=null;
+				}
+			}
+				else if (index==size-1){
+					Node removed = last;
+					Node newLast = getNode(size-2);
+					last= newLast;
+					last.next=null;
+					removed.next = null;
+		
+				}
 		else{
 			Node left = getNode(index-1);
 			Node removed = getNode(index);
