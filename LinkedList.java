@@ -146,10 +146,13 @@ public class LinkedList {
 	 *         if index is negative or greater than or equal to size
 	 */
 	public MemoryBlock getBlock(int index) {
+		if (size==0){
+			return null;
+		}else{
 		Node chosenNode= getNode(index);
 		return chosenNode.block;
 	}	
-
+	}
 	/**
 	 * Gets the index of the node pointing to the given memory block.
 	 * 
@@ -158,6 +161,7 @@ public class LinkedList {
 	 * @return the index of the block, or -1 if the block is not in this list
 	 */
 	public int indexOf(MemoryBlock block) {
+
 		Node current = first;
 		int counter =0;
 	while (current!=null){
@@ -214,7 +218,7 @@ public class LinkedList {
 	public void remove(int index) {
 		if (index<0 || index>size){
 			throw new IllegalArgumentException(
-					"node not found");
+					"ERROR IllegalArgumentException: index must be between 0 and size");
 
 		}else if (index==0){
 			Node removed = first;
