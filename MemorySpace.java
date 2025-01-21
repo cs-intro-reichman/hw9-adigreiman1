@@ -97,8 +97,9 @@ public class MemorySpace {
 		Node current = allocatedList.getNode(0);
 		while (current != null) {
 			if(current.block.baseAddress==address){
-				allocatedList.remove(current.block.baseAddress);
+				allocatedList.remove(current);
 				freeList.addLast(current.block);
+				return;
 			}
 			current = current.next;
 		}
@@ -120,10 +121,10 @@ public class MemorySpace {
 	public void defrag() {
 		if (freeList.getSize() <= 1) {
 			return;
-		}else{
+		}
 		Node current = freeList.getNode(0);
 		Node currentNext = current.next;
-		int sum = current.block.baseAddress + current.block.length;
+		int sum = current.block.baseAddress + current.block.length-1;
 		while (current != null && currentNext != null) {
 			if (currentNext.block.baseAddress -1 == sum){
 				current.block.length += currentNext.block.length;
@@ -135,6 +136,5 @@ public class MemorySpace {
 		
 		
 	}
-}
 }
 }
