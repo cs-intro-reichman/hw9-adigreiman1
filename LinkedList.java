@@ -147,7 +147,8 @@ public class LinkedList {
 	 */
 	public MemoryBlock getBlock(int index) {
 		if (size==0){
-			return null;
+			throw new IllegalArgumentException(
+					"ERROR IllegalArgumentException: index must be between 0 and size");
 		}else{
 		Node chosenNode= getNode(index);
 		return chosenNode.block;
@@ -187,16 +188,22 @@ public class LinkedList {
 		int index = indexOf(node.block);
 		if (index==-1){
 			throw new IllegalArgumentException(
-					"node not found");
-
+					"ERROR IllegalArgumentException: index must be between 0 and size");
+		
 		}else if (index==0){
 			Node removed = first;
 			first= first.next;
 			removed.next=null;
+			if(first==null){
+				last=null;
 		}
-		else if (index==size){
-			last= getNode(size-1);
+	}
+		else if (index==size-1){
+			Node removed = last;
+			Node newLast = getNode(size-2);
+			last= newLast;
 			last.next=null;
+			removed.next = null;
 
 		}
 		else{
@@ -251,7 +258,7 @@ public class LinkedList {
 		int index = indexOf(block);
 		if (index==-1){
 			throw new IllegalArgumentException(
-					"node not found");
+					"ERROR IllegalArgumentException: index must be between 0 and size");
 
 		}else if (index==0){
 			Node removed = first;
