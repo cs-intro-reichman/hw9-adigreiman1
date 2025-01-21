@@ -58,7 +58,7 @@ public class MemorySpace {
 	 * @return the base address of the allocated block, or -1 if unable to allocate
 	 */
 	public int malloc(int length) {		
-		//// Replace the following statement with your code
+		
 		return -1;
 	}
 
@@ -72,6 +72,7 @@ public class MemorySpace {
 	 */
 	public void free(int address) {
 		//// Write your code here
+		/// /// לבדוק אם נמצא באלוקייטד ליסט ואם כן למחוק ולהוסיף לפרי 
 	}
 	
 	/**
@@ -90,5 +91,6 @@ public class MemorySpace {
 	public void defrag() {
 		/// TODO: Implement defrag test
 		//// Write your code here
+		/// /// איחוד של תאים צמודים שונים 
 	}
 }
