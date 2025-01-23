@@ -67,21 +67,15 @@ public class MemorySpace {
 						allocatedList.addLast(current.block);
 						return current.block.baseAddress;
 					}else{
-
-						int newBaseAddress = current.block.baseAddress;	
-						MemoryBlock allocatedBlock = new MemoryBlock(newBaseAddress, length);
-                		allocatedList.addLast(allocatedBlock);
-						
-					current.block.baseAddress = newBaseAddress + length;
-					current.block.length = current.block.length - length;
+						MemoryBlock newMemoryBlock =new MemoryBlock(current.block.baseAddress, length);
+						allocatedList.addLast(newMemoryBlock);
 					
-					return newBaseAddress;
+					return newMemoryBlock.baseAddress;
 				}
 			}
 			current = current.next;
+			
 		}
-		
-		
 		return -1;
 	}
 
@@ -100,8 +94,10 @@ public class MemorySpace {
 				allocatedList.remove(current);
 				freeList.addLast(current.block);
 				return;
+			}else{
+				current = current.next;
 			}
-			current = current.next;
+			
 		}
 	}
 	
@@ -121,10 +117,10 @@ public class MemorySpace {
 	public void defrag() {
 		if (freeList.getSize() <= 1) {
 			return;
-		}
+		}else{
 		Node current = freeList.getNode(0);
 		Node currentNext = current.next;
-		int sum = current.block.baseAddress + current.block.length-1;
+		int sum = current.block.baseAddress + current.block.length;
 		while (current != null && currentNext != null) {
 			if (currentNext.block.baseAddress -1 == sum){
 				current.block.length += currentNext.block.length;
@@ -137,4 +133,5 @@ public class MemorySpace {
 		
 	}
 }
+	}
 }
