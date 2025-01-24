@@ -60,17 +60,19 @@ public class MemorySpace {
 	public int malloc(int length) {		
 		Node current = freeList.getNode(0);
 
-			while (current != null) {
+			while (current != null && length>=0) {
 				if (current.block.length >= length) {
 					if (current.block.length == length) {
+						MemoryBlock block= current.block;
 						freeList.remove(current);
-						allocatedList.addLast(current.block);
-						return current.block.baseAddress;
+						allocatedList.addLast(block);
+						return block.baseAddress;
 					}else{
 						MemoryBlock newMemoryBlock =new MemoryBlock(current.block.baseAddress, length);
+						current.block.baseAddress += length;
+						current.block.length -= length;
 						allocatedList.addLast(newMemoryBlock);
-					
-					return newMemoryBlock.baseAddress;
+						return newMemoryBlock.baseAddress;
 				}
 			}
 			current = current.next;
@@ -94,12 +96,12 @@ public class MemorySpace {
 				allocatedList.remove(current);
 				freeList.addLast(current.block);
 				return;
-			}else{
+			}
 				current = current.next;
 			}
 			
 		}
-	}
+	
 	
 	/**
 	 * A textual representation of the free list and the allocated list of this memory space, 
@@ -117,14 +119,12 @@ public class MemorySpace {
 	public void defrag() {
 		if (freeList.getSize() <= 1) {
 			return;
-		}else{
+		}
 		Node current = freeList.getNode(0);
-		Node currentNext = current.next;
-		int sum = current.block.baseAddress + current.block.length;
-		while (current != null && currentNext != null) {
-			if (currentNext.block.baseAddress -1 == sum){
-				current.block.length += currentNext.block.length;
-				freeList.remove(currentNext);
+		while (current != null && current.next != null) {
+			if (current.next.block.baseAddress == current.block.baseAddress + current.block.length){
+				current.block.length += current.next.block.length;
+				freeList.remove(current.next);
 			}else{
 				current = current.next;
 			}
@@ -134,4 +134,4 @@ public class MemorySpace {
 	}
 }
 	}
-}
+
