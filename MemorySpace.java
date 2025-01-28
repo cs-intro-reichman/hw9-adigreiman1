@@ -59,8 +59,10 @@ public class MemorySpace {
 	 */
 	public int malloc(int length) {		
 		Node current = freeList.getNode(0);
-
-			while (current != null && length>=0) {
+		if ( length<0){
+			return -1;
+		}
+			while (current != null) {
 				if (current.block.length >= length) {
 					if (current.block.length == length) {
 						MemoryBlock block= current.block;
@@ -75,7 +77,7 @@ public class MemorySpace {
 						return newMemoryBlock.baseAddress;
 				}
 			}
-			current = current.next;
+		current = current.next;
 			
 		}
 		return -1;
@@ -121,13 +123,20 @@ public class MemorySpace {
 			return;
 		}
 		Node current = freeList.getNode(0);
-		while (current != null && current.next != null) {
-			if (current.next.block.baseAddress == current.block.baseAddress + current.block.length){
-				current.block.length += current.next.block.length;
-				freeList.remove(current.next);
-			}else{
-				current = current.next;
+
+		while (current != null) {
+			Node linkedCurrentNode = freeList.getNode(0);
+			while (linkedCurrentNode != null){
+			if (linkedCurrentNode.block.baseAddress == current.block.baseAddress + current.block.length){
+				current.block.length += linkedCurrentNode.block.length;
+				freeList.remove(linkedCurrentNode);
+				linkedCurrentNode = freeList.getNode(0);
+				
 			}
+				
+				linkedCurrentNode = linkedCurrentNode.next;
+			}
+			current = current.next;
 
 		
 		

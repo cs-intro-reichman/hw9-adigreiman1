@@ -303,16 +303,12 @@ public class LinkedList {
 	 * A textual representation of this list, for debugging.
 	 */
 	public String toString() {
-		String output="";
-		ListIterator iter = iterator();
-		while(iter.current!=null){
-			MemoryBlock block = iter.next();
-			output+=block.toString();
-			if(iter.current != null){
-				output += "--->";	
-			}
+		String s = "";
+		Node current = first;
+		while (current != null) {
+		s = s + current.block + " ";
+		current = current.next;
 		}
-		return output;
-	}
-	
+		return s;
+		}
 }
